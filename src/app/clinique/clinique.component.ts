@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
+import {DatabaseService} from "../database/database.service";
 
 @Component({
   selector: 'app-clinique',
@@ -17,7 +18,8 @@ export class CliniqueComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  constructor() {
+  constructor(private data: DatabaseService) {
+    console.log(data.getAll('clinique'));
   }
 
   ngOnInit() {

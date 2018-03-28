@@ -10,17 +10,24 @@ const db = new pg.Client({
 });
 db.connect();
 
-exports.getOpenTickets = (req, res, next) => {
-  const openTickets = [];
-  const query = db.query('SELECT * FROM animal')
-    .then(result => console.log(result))
-    .catch(e => console.error(e.stack))
-    .then(() => db.end());
-  /*query.on('row', (row) => {
-    openTickets.push(row);
+exports.getPersonnel = (req, res, next) => {
+  return db.query('SELECT * FROM vetosansfrontieresdb.personnel', (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(data.rows);
+      res.send(data.rows);
+    }
   });
-  query.on('end', () => {
-    next();
-    return res.json(openTickets);
-  });*/
+};
+
+exports.getClinique = (req, res, next) => {
+  return db.query('SELECT * FROM vetosansfrontieresdb.clinique', (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(JSON.stringify(data.rows));
+      res.send(JSON.stringify(data.rows));
+    }
+  });
 };

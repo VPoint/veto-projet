@@ -23,6 +23,8 @@ import { HomeComponent } from './home/home.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {routing} from './app.routing';
+import {HttpClientModule} from "@angular/common/http";
+import {DatabaseService} from "./database/database.service";
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import {routing} from './app.routing';
   imports: [
     routing,
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     MatCardModule,
     MatButtonModule,
@@ -51,7 +54,7 @@ import {routing} from './app.routing';
     MatSelectModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
