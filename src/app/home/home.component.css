@@ -1,0 +1,21 @@
+.fill {
+  max-width: calc(100% + 40px);
+  margin: -20px;
+  margin-bottom: 1px;
+  padding: 0;
+}
+
+mat-card {
+  width: 33%;
+  margin: 0.5%;
+}
+
+.about-head {
+  display: flex;
+  flex-direction: row;
+}
+
+mat-card:hover {
+  background: #009ec5;
+  color: white;
+}
