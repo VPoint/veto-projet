@@ -1,0 +1,41 @@
+<h2>
+  Animaux
+</h2>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="animalSource">
+
+    <!-- Position Column -->
+    <ng-container [matColumnDef]="name" *ngFor="let name of displayedAnimalColumns">
+      <mat-header-cell *matHeaderCellDef> {{animalTitles[name]}}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngIf="name !='cliniqueno'"
+             routerLink="/animal/{{element.animalno}}">{{element[name]}}</div>
+        <div *ngIf="name =='cliniqueno'">
+          <button mat-icon-button routerLink="/edit-animal/{{element.animalno}}">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="delete(element.animalno)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedAnimalColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedAnimalColumns;"
+             (click)="print(row)"></mat-row>
+  </mat-table>
+</div>
+
+<div style="position: fixed; bottom:0;">
+  <button mat-raised-button color="primary" style="width: 100vw; margin-left: -20px;" routerLink="/new-animal">
+    Register New Animal
+  </button>
+</div>

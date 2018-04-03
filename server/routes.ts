@@ -2,13 +2,13 @@ const router = require('express').Router();
 const pg = require('pg');
 const requestHandler = require('./request-handler.ts');
 
-const connection = process.env.DATABASE_URL || 'postgres://client:serverPASSWORD@localhost:5432/vetoprojet';
+const connection = process.env.DATABASE_URL || 'postgres://';
 
 const db = new pg.Client(connection);
 db.connect();
 
-router.get('/clinique', (req, res, next) => {
-  db.query('SELECT * FROM vetosansfrontieresdb.clinique', (err, data) => {
+const getAll = ( table ) => (req, res, next) => {
+  db.query('SELECT * FROM vetosansfrontieresdb.' + table, (err, data) => {
     if (err) {
       console.log(err);
     } else {
@@ -16,82 +16,108 @@ router.get('/clinique', (req, res, next) => {
       res.send({result: 'SUCCESS', data: data.rows});
     }
   });
-});
+};
 
-router.get('/personnel', (req, res, next) => {
-  db.query('SELECT * FROM vetosansfrontieresdb.personnel', (err, data) => {
+const getByAnimalNo = ( table ) => (req, res, next) => {
+  db.query('SELECT * FROM vetosansfrontieresdb.' + table + ' WHERE vetosansfrontieresdb.' + table + '.animalno = \''+ req.params.id+ '\'' , (err, data) => {
     if (err) {
+      console.log(req.params.id);
       console.log(err);
     } else {
       console.log(data.rows);
       res.send({result: 'SUCCESS', data: data.rows});
     }
   });
-});
+};
 
-router.get('/proprietaires', (req, res, next) => {
-  db.query('SELECT * FROM vetosansfrontieresdb.proprietaires', (err, data) => {
+const getTraitementByExamenNo = ( ) => (req, res, next) => {
+  db.query('SELECT * FROM vetosansfrontieresdb.traitement,' +
+    'vetosansfrontieresdb.traitementexamen WHERE vetosansfrontieresdb.traitementexamen.examenno = \'' + req.params.id + '\';'
+    , (err, data) => {
     if (err) {
+      console.log(req.params.id);
       console.log(err);
     } else {
       console.log(data.rows);
       res.send({result: 'SUCCESS', data: data.rows});
     }
   });
-});
+};
 
-router.get('/animal', (req, res, next) => {
-  db.query('SELECT * FROM vetosansfrontieresdb.animal', (err, data) => {
+const getPropByCliniqueNo = () => (req, res, next) => {
+  db.query('SELECT * FROM vetosansfrontieresdb.proprietaire WHERE ' +
+    'vetosansfrontieresdb.proprietaire.cliniqueno = \'' + req.params.id + '\';'
+    , (err, data) => {
+      if (err) {
+        console.log(req.params.id);
+        console.log(err);
+      } else {
+        console.log(data.rows);
+        res.send({result: 'SUCCESS', data: data.rows});
+      }
+    });
+}
+
+router.get('/clinique', getAll('clinique'));
+router.get('/personnel', getAll('personnel'));
+router.get('/proprietaire', getAll('proprietaire'));
+router.get('/animal', getAll('animal'));
+
+router.get('/animal/:id', getByAnimalNo('animal'));
+router.get('/examen/:id', getByAnimalNo('examen'));
+router.get('/traitement/:id', getTraitementByExamenNo());
+router.get('/proprietaire/:id', getPropByCliniqueNo());
+
+router.post('/animal/create', (req, res, next) => {
+  const data = req.body;
+  console.log(req.body);
+
+  db.query('INSERT INTO VETOSANSFRONTIERESDB.Animal(cliniqueNo, animalNo, propNo, nom, Atype,' +
+    'description, dateDeNaissance, dateInscription, etat) VALUES (\'' + data.cliniqueno + '\' , \'' + data.animalno + '\' , \'' +
+    data.propno + '\' , \'' + data.nom + '\' , \'' + data.atype + '\' , \'' + data.description + '\' , DATE \'' +
+    data.datedenaissance + '\' , DATE \'' + data.dateinscription + '\' , \'' + data.etat + '\' );', (err, info) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(data.rows);
-      res.send({result: 'SUCCESS', data: JSON.stringify(data.rows)});
+      console.log('Safely Added');
+      res.send({result: 'SUCCESS'});
     }
   });
 });
 
-router.get('/animal/create', (req, res, next) => {
-  const data = {text: req.body.formData, complete: false};
-  const query = {
-    text: 'INSERT INTO VETOSANSFRONTIERESDB.Animal(cliniqueNo, animalNo, propNo, nom, Atype,' +
-    'description, dateDeNaissance, dateInscription, etat) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);',
-    values: [data.text, data.complete]
-  };
+router.put('/animal/update/:id', (req, res, next) => {
+  const data = req.body;
+  console.log(req.body);
 
-  db.query(query);
-  db.query('SELECT * FROM vetosansfrontieresdb.animal ORDER BY animalNo ASC', (err, info) => {
+  db.query('UPDATE vetosansfrontieresdb.animal ' +
+    ' SET cliniqueno=\'' + data.cliniqueno + '\', animalno=\'' + data.animalno + '\', propno=\'' + data.propno
+    + '\', nom=\'' + data.nom + '\', atype=\'' + data.atype + '\', description=\'' + data.description + '\', ' +
+    'datedenaissance=\'' + data.datedenaissance + '\', dateinscription=\'' + data.dateinscription + '\', etat=\''+ data.etat + '\'\n' +
+    ' WHERE animalno = \'' + data.animalno + '\';', (err, info) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(info.rows);
-      res.send({result: 'SUCCESS', data: JSON.stringify(info.rows)});
-    }
-  });
-});
-
-router.get('/animal/update/:id', (req, res, next) => {
-  const query = {
-    text: 'UPDATE vetosansfrontieresdb.animal ' +
-    ' SET cliniqueno=?, animalno=?, propno=?, nom=?, atype=?, description=?, ' +
-    'datedenaissance=?, dateinscription=?, etat=?\n' +
-    ' WHERE id = %//%;',
-    values: ''
-  };
-
-  db.query(query);
-  db.query('SELECT * FROM vetosansfrontieresdb.animal ORDER BY animalNo ASC', (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info.rows);
-      res.send(info.rows);
+      console.log('Safely Updated');
+      res.send({result: 'SUCCESS'});
     }
   });
 });
 
 router.get('/animal/delete/:id', (req, res, next) => {
-  return db.query('DELECT FROM vetosansfrontieresdb.animal WHERE id=', (err, data) => {
+  return db.query('DELETE FROM vetosansfrontieresdb.animal WHERE ' +
+    'vetosansfrontieresdb.animal.animalno = \'' + req.params.id + '\'', (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Safely Deleted');
+      res.send({result: 'SUCCESS'});
+    }
+  });
+});
+
+router.get('/examen', (req, res, next) => {
+  const param = req.param.id;
+  return db.query('SELECT * FROM examen WHERE vetosansfrontieresdb.animal.animalno = \'' + req.params.id + '\'' , (err, data) => {
     if (err) {
       console.log(err);
     } else {

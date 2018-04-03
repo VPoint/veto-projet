@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
-import {DatabaseService} from "../database/database.service";
+import {DatabaseService} from '../database/database.service';
 
 @Component({
   selector: 'app-clinique',
@@ -8,72 +8,43 @@ import {DatabaseService} from "../database/database.service";
   styleUrls: ['./clinique.component.css']
 })
 export class CliniqueComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  dataSourceAnimal = new MatTableDataSource(ELEMENT_DATA);
+  displayedCliniqueColumns = ['propno', 'nom', 'numtelephone', 'adresse', 'cliniqueno'];
+  cliniqueInfo = [];
+  cliniqueSource: any;
+  selectedClinique: any;
+
+  animalTitles = {
+    'animalno': 'No.', 'nom': 'Nom', 'atype': 'Type', 'description': 'Description', 'datedenaissance': 'Date de naissance',
+    'dateinscription': 'Date d\'inscription', 'etat': 'État'
+  };
+
+  propTitles = {
+    'propno': 'No.', 'nom': 'Nom', 'numtelephone': 'Numéro de téléphone', 'adresse': 'Adresse'
+  };
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.cliniqueSource.filter = filterValue;
   }
 
   constructor(private data: DatabaseService) {
-    console.log(data.getAll('clinique'));
+    data.getAll('clinique').then(
+      (res) => {
+        this.cliniqueInfo = res.data;
+        this.selectedClinique = this.cliniqueInfo[0].cliniqueno;
+      }
+    );
+  }
+
+  delete(id: string) {
+    this.data.delete('clinique', id);
   }
 
   ngOnInit() {
   }
+
+  print(text: any) {
+    console.log(text);
+  }
 }
-
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-export interface Proprietaire {
-  propNo: number;
-  nom: string;
-  numTelephone: string;
-  adresse: string;
-}
-
-export interface Animal {
-  animalNo: number;
-  nom: string;
-  type: string;
-  description: string;
-  dateDeNaissance: string;
-  dateInscription: string;
-  etat: string;
-  proprietaireNo: string;
-}
-
-const PERSONNEL_DATA: Proprietaire[] = [];
-
-const ANIMAL_DATA: Animal[] = [];
-
-const ELEMENT_DATA: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];

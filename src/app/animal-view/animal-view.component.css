@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-basis: auto;
+}
+
+.header > h2 {
+  flex: 1;
+  margin: 5px;
+}
+
+.mat-raised-button {
+  width: 100%;
+}

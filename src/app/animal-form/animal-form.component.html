@@ -1,0 +1,75 @@
+<h2>
+  Créer un nouvel animal
+</h2>
+
+<div>
+  <mat-form-field>
+  <mat-select placeholder="Nom du clinique"
+              [(value)] = "selectedClinique"
+              [(ngModel)]="animal.cliniqueno"
+              [ngModelOptions]="{standalone: true}"
+              (selectionChange)="getOwner()">
+    <mat-option *ngFor="let c of cliniqueInfo" [value]="c.cliniqueno">{{c.cliniquenom}}</mat-option>
+  </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+  <mat-select placeholder="Nom de la propriétaire"
+              [(value)] = "selectedProp"
+              [(ngModel)]="animal.propno"
+              [ngModelOptions]="{standalone: true}">
+    <mat-option *ngFor="let p of propInfo" [value]="p.propno">{{p.nom}}</mat-option>
+  </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Nom de l'animal"
+           [(ngModel)]="animal.nom"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput placeholder="Type de l'animal"
+           [(ngModel)]="animal.atype"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           [(ngModel)]="animal.description"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Description">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           [matDatepicker]="naissance"
+           [(ngModel)]="animal.datedenaissance"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Date de naissance">
+    <mat-datepicker-toggle matSuffix [for]="naissance"></mat-datepicker-toggle>
+    <mat-datepicker #naissance></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           [matDatepicker]="inscr"
+           [(ngModel)]="animal.dateinscription"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Date d'inscription">
+    <mat-datepicker-toggle matSuffix [for]="inscr"></mat-datepicker-toggle>
+    <mat-datepicker #inscr></mat-datepicker>
+  </mat-form-field>
+
+  <label>État: </label>
+  <mat-radio-group [(ngModel)]="animal.etat"
+                   [ngModelOptions]="{standalone: true}">
+    <mat-radio-button value="vivant">vivant</mat-radio-button>
+    <mat-radio-button value="mort">mort</mat-radio-button>
+  </mat-radio-group>
+
+  <button (click)="editAnimal()" mat-raised-button color="accent">
+    Créer un nouvel animal
+  </button>
+
+</div>
+
+

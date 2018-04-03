@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class DatabaseService {
@@ -15,4 +16,41 @@ export class DatabaseService {
       .then(res => res )
       .catch(err => console.log(err));
   }
+
+  getSome(table: string, id: string ): Promise<any> {
+    return this.http
+      .get(this.apiUrl + table + '/' + id, {headers: this.headers})
+      .toPromise()
+      .then(res => res )
+      .catch(err => console.log(err));
+  }
+
+  create(table: string, data): Promise<any> {
+    return this.http
+      .post(this.apiUrl + table + '/create', data, {headers: this.headers})
+      .toPromise()
+      .then(res => res)
+      .catch(err => console.log(err));
+  }
+
+  update(table: string, id: string, data): Promise<any> {
+    return this.http
+      .put(this.apiUrl + table + '/update/' + id, data, {headers: this.headers})
+      .toPromise()
+      .then(res => res)
+      .catch(err => console.log(err));
+  }
+
+  delete(table: string, id: string): Promise<any> {
+    return this.http
+      .get(this.apiUrl + table + '/delete/' + id, {headers: this.headers})
+      .toPromise()
+      .then(res => res)
+      .catch(err => console.log(err));
+  }
+}
+
+interface Result {
+  result: string;
+  data?: object[];
 }

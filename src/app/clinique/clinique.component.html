@@ -1,7 +1,11 @@
 <h2>Clinique</h2>
-<p>Choisir un Clinique pour continuer: <select></select></p>
-<mat-tab-group>
-  <mat-tab label="Owner">
+<p>Choisir un Clinique pour continuer: </p>
+<mat-form-field>
+  <mat-select placeholder="Nom du Clinique" [(value)] = "selectedClinique">
+    <mat-option *ngFor="let c of cliniqueInfo" [value]="c.cliniqueno">{{c.cliniquenom}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
     <div class="example-container mat-elevation-z8">
       <div class="example-header">
         <mat-form-field>
@@ -9,102 +13,32 @@
         </mat-form-field>
       </div>
 
-      <mat-table #table [dataSource]="dataSource">
+      <mat-table #table [dataSource]="propSource">
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.position}}</mat-cell>
-        </ng-container>
+          <!-- Position Column -->
+          <ng-container [matColumnDef]="name" *ngFor="let name of displayedPropColumns">
+            <mat-header-cell *matHeaderCellDef> {{propTitles[name]}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <div *ngIf="name !='cliniqueno'">{{element[name]}} </div>
+              <div *ngIf="name =='cliniqueno'">
+                <button mat-icon-button>
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button>
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-cell>
+          </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <mat-header-cell *matHeaderCellDef> Weight</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.weight}}</mat-cell>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <!--<ng-container matColumnDef="symbol">
-          <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-        </ng-container>-->
-
-        <ng-container matColumnDef="symbol">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <button mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedPropColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedPropColumns;"></mat-row>
       </mat-table>
 
       <div style="position: fixed; bottom:0;">
         <button mat-raised-button color="primary" style="    width: 100vw;
     margin-left: -20px;">
-          Register New Owner
+          Nouvelle Clinique
         </button>
       </div>
     </div>
-
-    <button mat-button>
-    </button>
-  </mat-tab>
-  <mat-tab label="Animal">
-    <div class="example-container mat-elevation-z8">
-      <div class="example-header">
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-      </div>
-
-      <mat-table #table [dataSource]="dataSource">
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.position}}</mat-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
-        </ng-container>
-
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <mat-header-cell *matHeaderCellDef> Weight</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.weight}}</mat-cell>
-        </ng-container>
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <mat-header-cell *matHeaderCellDef>Symbol</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.symbol}}</mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
-
-    <div style="position: fixed; bottom:0;">
-      <button mat-raised-button color="primary" style="width: 100vw; margin-left: -20px;">
-        Register New Animal
-      </button>
-    </div>
-  </mat-tab>
-</mat-tab-group>
