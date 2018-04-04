@@ -32,6 +32,7 @@
       <p>Datée : {{exam.datee | date}}</p>
       <p>Heure : {{exam.heure}}</p>
 
+      <h3 *ngIf="traitements.length > 0">Liste des Traitements</h3>
       <table *ngIf="traitements.length > 0">
         <tr>
           <th>No.</th>

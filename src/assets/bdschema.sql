@@ -17,7 +17,7 @@ dateDeNaissance DATE	NOT NULL,
 nas	VARCHAR(10)	UNIQUE NOT NULL,
 sexe sexType DEFAULT 'M',
 fonction VARCHAR(50) NOT NULL,
-salaire  VARCHAR(50) NOT NULL,
+salaire  INTEGER NOT NULL,
 
 PRIMARY KEY (personnelNo));
 

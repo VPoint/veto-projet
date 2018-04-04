@@ -11,6 +11,7 @@ export class AnimalFormComponent implements OnInit {
   animal: any = {};
   cliniqueInfo = [];
   selectedClinique: any;
+  action = 'Créer animal';
 
   propInfo = [];
   selectedProp: any;
@@ -34,6 +35,7 @@ export class AnimalFormComponent implements OnInit {
         if (data.data[0]) {
           this.animal = data.data[0];
           this.isEditMode = true;
+          this.action = 'Modifier animal';
           this.selectedClinique = this.animal.cliniqueno;
           this.getOwner();
           console.log(data);
@@ -60,6 +62,7 @@ export class AnimalFormComponent implements OnInit {
           console.log(data);
         });
     } else {
+      this.animal.animalno = 'A' + Math.floor(Math.random() * Math.floor(10) + 11);
       this.data.create('animal', this.animal)
         .then((data) => {
           if (data.result === 'SUCCESS') {

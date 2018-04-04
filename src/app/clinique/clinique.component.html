@@ -1,44 +1,30 @@
-<h2>Clinique</h2>
-<p>Choisir un Clinique pour continuer: </p>
-<mat-form-field>
-  <mat-select placeholder="Nom du Clinique" [(value)] = "selectedClinique">
-    <mat-option *ngFor="let c of cliniqueInfo" [value]="c.cliniqueno">{{c.cliniquenom}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<h2>Cliniques</h2>
 
-    <div class="example-container mat-elevation-z8">
-      <div class="example-header">
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-      </div>
+<div class="example-container mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Recherche">
+    </mat-form-field>
+  </div>
 
-      <mat-table #table [dataSource]="propSource">
+  <mat-table #table [dataSource]="cliniqueSource">
 
-          <!-- Position Column -->
-          <ng-container [matColumnDef]="name" *ngFor="let name of displayedPropColumns">
-            <mat-header-cell *matHeaderCellDef> {{propTitles[name]}} </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <div *ngIf="name !='cliniqueno'">{{element[name]}} </div>
-              <div *ngIf="name =='cliniqueno'">
-                <button mat-icon-button>
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button>
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </mat-cell>
-          </ng-container>
+    <!-- Position Column -->
+    <ng-container [matColumnDef]="name" *ngFor="let name of displayedCliniqueColumns">
+      <mat-header-cell *matHeaderCellDef> {{cliniqueTitles[name]}}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div>{{element[name]}}</div>
+      </mat-cell>
+    </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedPropColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedPropColumns;"></mat-row>
-      </mat-table>
+    <mat-header-row *matHeaderRowDef="displayedCliniqueColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedCliniqueColumns;"></mat-row>
+  </mat-table>
 
-      <div style="position: fixed; bottom:0;">
-        <button mat-raised-button color="primary" style="    width: 100vw;
+  <div style="position: fixed; bottom:0;">
+    <button mat-raised-button color="primary" style="    width: 100vw;
     margin-left: -20px;">
-          Nouvelle Clinique
-        </button>
-      </div>
-    </div>
+      Nouvelle Clinique
+    </button>
+  </div>
+</div>

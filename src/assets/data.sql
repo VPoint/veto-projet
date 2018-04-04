@@ -12,7 +12,7 @@ INSERT INTO VETOSANSFRONTIERESDB.Personnel (personnelNo, cliniqueNo, prenom, nom
 INSERT INTO VETOSANSFRONTIERESDB.Personnel (personnelNo, cliniqueNo, prenom, nomDeFamille, adresse, numTelephone,dateDeNaissance, nas, sexe, fonction, salaire ) VALUES ('P5','C1','Dannielle','Atwood','28, rue Laval, Quebec, J7A 3B5','3107811300', DATE'1980-03-04', '123656789', 'F', 'infirmiere', '20000');
 
 
-INSERT INTO VETOSANSFRONTIERESDB.Personnel (personnelNo, cliniqueNo, prenom, nomDeFamille, adresse, numTelephone,dateDeNaissance, nas, sexe, fonction, salaire ) VALUES ('P6','C1','Sasha','Gaelle','30, rue Marchand, Quebec, Z7A 1A5','2806811100', DATE'1990-04-16', '123756789', 'F', 'veterinaire', '28000');
+INSERT INTO VETOSANSFRONTIERESDB.Personnel (personnelNo, cliniqueNo, prenom, nomDeFamille, adresse, numTelephone,dateDeNaissance, nas, sexe, fonction, salaire ) VALUES ('P6','C1','Jean','Tremblay','30, rue Marchand, Quebec, Z7A 1A5','2806811100', DATE'1990-04-16', '123756789', 'M', 'veterinaire', '28000');
 
 
 INSERT INTO VETOSANSFRONTIERESDB.Personnel (personnelNo, cliniqueNo, prenom, nomDeFamille, adresse, numTelephone,dateDeNaissance, nas, sexe, fonction, salaire ) VALUES ('P7','C1','Fred','Richard','20, rue Antionne, Quebec, T6A 1A5','3697811100', DATE'1958-01-27', '128456789', 'M', 'personnel entretien', '10000');
@@ -73,7 +73,7 @@ INSERT INTO VETOSANSFRONTIERESDB.Proprietaire (cliniqueNo, propNo, nom, numTelep
 INSERT INTO VETOSANSFRONTIERESDB.Proprietaire (cliniqueNo, propNo, nom, numTelephone, adresse) VALUES ('C2','PR4','Francois Emmanuel','8192087893' ,'36, rue Panier, Quebec, T3A 3G5');
 
 
-INSERT INTO VETOSANSFRONTIERESDB.Proprietaire (cliniqueNo, propNo, nom, numTelephone, adresse) VALUES ('C2','PR5','Francoise Barrier','7192087896' ,'37, rue Banner, Quebec, U3B 3G5');
+INSERT INTO VETOSANSFRONTIERESDB.Proprietaire (cliniqueNo, propNo, nom, numTelephone, adresse) VALUES ('C2','PR5','Francoise Tremblay','7192087896' ,'37, rue Banner, Quebec, U3B 3G5');
 
 
 INSERT INTO VETOSANSFRONTIERESDB.Proprietaire (cliniqueNo, propNo, nom, numTelephone, adresse) VALUES ('C2','PR6','Rachel Barrison','6192087896','299, rue Renard, Quebec, U3B 4Y5');
@@ -118,7 +118,7 @@ INSERT INTO VETOSANSFRONTIERESDB.Animal (cliniqueNo, animalNo, propNo, nom, Atyp
 INSERT INTO VETOSANSFRONTIERESDB.Animal (cliniqueNo, animalNo, propNo, nom, Atype ,description, dateDeNaissance, dateInscription, etat) VALUES ('C2','A8','PR6','Tango','chien','chien avec yeux marron pesant 1.5 kg',DATE'2018-01-31',DATE'2018-02-04','vivant');
 
 
-INSERT INTO VETOSANSFRONTIERESDB.Animal (cliniqueNo, animalNo, propNo, nom, Atype ,description, dateDeNaissance, dateInscription, etat) VALUES ('C3','A9','PR7','Stan','chien','chien poilu avec yeux gris pesant 5.5 kg',DATE'2017-01-31',DATE'2018-01-04','vivant');
+INSERT INTO VETOSANSFRONTIERESDB.Animal (cliniqueNo, animalNo, propNo, nom, Atype ,description, dateDeNaissance, dateInscription, etat) VALUES ('C3','A9','PR7','Stan','chat','chat poilu avec yeux gris pesant 5.5 kg',DATE'2017-01-31',DATE'2018-01-04','vivant');
 
 
 INSERT INTO VETOSANSFRONTIERESDB.Animal (cliniqueNo, animalNo, propNo, nom, Atype ,description, dateDeNaissance, dateInscription, etat) VALUES ('C3','A10','PR7','Felix','chien','chien non poilu avec yeux jaune pesant 3.5 kg',DATE'2017-02-28',DATE'2018-02-04','vivant');
@@ -170,9 +170,3 @@ INSERT INTO VETOSANSFRONTIERESDB.TraitementExamen(examenNo, traitementNo, quanti
 INSERT INTO VETOSANSFRONTIERESDB.TraitementExamen(examenNo, traitementNo, quantite, dateCommence, dateFini) VALUES ('E3','T1',1,DATE'2018-01-04', DATE'2018-01-04');
 
 -- INSERT IN TraitementExamen  END --
-
-
-
-
-
-

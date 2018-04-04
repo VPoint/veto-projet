@@ -1,35 +1,216 @@
 <h2>
-  Les 15 Requêtes:
+  Les 10 Requêtes:
 </h2>
 
 <mat-accordion>
-  <mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R1')">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Personal data
+        Requête 1
       </mat-panel-title>
-      <mat-panel-description>
-        Type your name and age
-      </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <mat-form-field>
-      <input matInput placeholder="First name">
-    </mat-form-field>
+    <p>Lister les le numéro et nom des cliniques, leur adresse et leur gestionnaire, ordonnés par le
+      numéro de clinique
+    </p>
+    <p>
+      <i>SELECT cliniqueno, cliniquenom, rue, ville, province, codepostal, gestionNo
+        FROM VETOSANSFRONTIERESDB.Clinique ORDER BY cliniqueno;</i>
+    </p>
 
-    <mat-form-field>
-      <input matInput placeholder="Age">
-    </mat-form-field>
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R2')">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Self aware panel
+        Requête 2
       </mat-panel-title>
-      <mat-panel-description>
-        Blah blah blah
-      </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
+
+    <p>Lister les noms des animaux sans doublons dans toutes les cliniques</p>
+    <p>
+      <i>SELECT DISTINCT nom FROM VETOSANSFRONTIERESDB.Animal;</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R3')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 3
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister les numéros et noms des propriétaires d’animaux ainsi que les détails de leurs animaux
+      dans une clinique donnée (à vous de la choisir) </p>
+    <p>
+      <i>SELECT P.propno, P.nom, A.* FROM VETOSANSFRONTIERESDB.Proprietaire AS P, VETOSANSFRONTIERESDB.Animal AS A
+        WHERE P.propno = A.propno AND A.cliniqueno ='C1';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R4')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 4
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister l’ensemble des examens d’un animal donné</p>
+    <p>
+      <i>SELECT * FROM VETOSANSFRONTIERESDB.Examen WHERE animalno='A1';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R5')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 5
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister le détail des traitements d’un animal suite à un examen donné</p>
+    <p>
+      <i>SELECT TR.* FROM VETOSANSFRONTIERESDB.Traitementexamen AS TE, VETOSANSFRONTIERESDB.traitement AS TR WHERE
+        TE.traitementno = TR.traitementno AND TE.examenno = 'E1';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R6')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 6
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister le salaire total des employés par clinique ordonné par numéro de clinique</p>
+    <p>
+      <i>SELECT P.cliniqueno, SUM(salaire) AS SalaireTotal FROM VETOSANSFRONTIERESDB.Personnel AS P GROUP BY
+        P.cliniqueno ORDER BY P.cliniqueno ;</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R7')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 7
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister le nombre total d’animaux d’un type donné (vous pouvez le choisir) dans chaque
+      clinique</p>
+    <p>
+      <i>SELECT An.cliniqueno, COUNT(animalno) AS NOMBRE_ANIMAUX FROM VETOSANSFRONTIERESDB.Animal AS
+        An WHERE An.atype='chat' GROUP BY An.cliniqueno;</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R8')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 8
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister le coût minimum, maximum et moyen des traitements</p>
+    <p>
+      <i>SELECT MIN(cout) AS minCout, MAX(cout) AS maxCout, AVG(cout) AS avgCout
+        FROM VETOSANSFRONTIERESDB.Traitement;</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R9')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 9
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Quels sont les noms des employés de plus de 50 ans ordonnés par nom ?</p>
+    <p>
+      <i>SELECT prenom, nomdefamille FROM VETOSANSFRONTIERESDB.Personnel WHERE (extract(year from current_date )
+        - extract(year from datedenaissance)) >= 50 ORDER BY nomdefamille;</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="getRequest('R10')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 10
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Quels sont les propriétaires dont le nom contient « blay » ?</p>
+    <p>
+      <i>SELECT * FROM VETOSANSFRONTIERESDB.proprietaire WHERE nom LIKE '%blay%';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
   </mat-expansion-panel>
 </mat-accordion>

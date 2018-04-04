@@ -8,18 +8,12 @@ import {DatabaseService} from '../database/database.service';
   styleUrls: ['./clinique.component.css']
 })
 export class CliniqueComponent implements OnInit {
-  displayedCliniqueColumns = ['propno', 'nom', 'numtelephone', 'adresse', 'cliniqueno'];
-  cliniqueInfo = [];
+  displayedCliniqueColumns = ['cliniqueno', 'cliniquenom', 'codepostal', 'rue', 'ville', 'province'];
   cliniqueSource: any;
-  selectedClinique: any;
 
-  animalTitles = {
-    'animalno': 'No.', 'nom': 'Nom', 'atype': 'Type', 'description': 'Description', 'datedenaissance': 'Date de naissance',
-    'dateinscription': 'Date d\'inscription', 'etat': 'État'
-  };
-
-  propTitles = {
-    'propno': 'No.', 'nom': 'Nom', 'numtelephone': 'Numéro de téléphone', 'adresse': 'Adresse'
+  cliniqueTitles = {
+    'cliniqueno': 'No.', 'cliniquenom': 'Nom', 'codepostal': 'Code postale', 'province': 'Province',
+    'rue': 'Rue', 'ville': 'Ville'
   };
 
   applyFilter(filterValue: string) {
@@ -31,20 +25,11 @@ export class CliniqueComponent implements OnInit {
   constructor(private data: DatabaseService) {
     data.getAll('clinique').then(
       (res) => {
-        this.cliniqueInfo = res.data;
-        this.selectedClinique = this.cliniqueInfo[0].cliniqueno;
+        this.cliniqueSource = new MatTableDataSource(res.data);
       }
     );
   }
 
-  delete(id: string) {
-    this.data.delete('clinique', id);
-  }
-
   ngOnInit() {
-  }
-
-  print(text: any) {
-    console.log(text);
   }
 }

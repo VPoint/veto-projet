@@ -15,7 +15,7 @@ export class AnimalComponent implements OnInit {
 
   animalTitles = {
     'animalno': 'No.', 'nom': 'Nom', 'atype': 'Type', 'description': 'Description', 'datedenaissance': 'Date de naissance',
-    'dateinscription': 'Date d\'inscription', 'etat': 'État'
+    'dateinscription': 'Date d\'inscription', 'etat': 'État', 'propno': 'No. Prop'
   };
 
   applyFilter(filterValue: string) {
