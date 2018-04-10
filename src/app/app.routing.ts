@@ -5,19 +5,25 @@ import {CliniqueComponent} from './clinique/clinique.component';
 import {RequestComponent} from './request/request.component';
 import {AnimalFormComponent} from './animal-form/animal-form.component';
 import {AnimalViewComponent} from './animal-view/animal-view.component';
-import {ProprietaireComponent} from "./proprietaire/proprietaire.component";
-import {AnimalComponent} from "./animal/animal.component";
+import {ProprietaireComponent} from './proprietaire/proprietaire.component';
+import {AnimalComponent} from './animal/animal.component';
+import {ProprietaireFormComponent} from './proprietaire-form/proprietaire-form.component';
+import {PersonnelFormComponent} from './personnel-form/personnel-form.component';
+import {CliniqueFormComponent} from './clinique-form/clinique-form.component';
 
 const appRoutes: Routes = [
+  {path: 'home', component: HomeComponent},
   {path: 'request', component: RequestComponent},
   {path: 'clinique', component: CliniqueComponent},
-  {path: 'home', component: HomeComponent},
+  {path: 'new-clinique', component: CliniqueFormComponent},
   {path: 'personnel', component: PersonnelComponent},
+  {path: 'new-personnel', component: PersonnelFormComponent},
   {path: 'proprietaire', component: ProprietaireComponent},
+  {path: 'new-proprietaire', component: ProprietaireFormComponent},
   {path: 'animal', component: AnimalComponent},
-  {path: 'animal/:id', component: AnimalViewComponent},
+  {path: 'animal/:cliniqueid/:id', component: AnimalViewComponent},
   {path: 'new-animal', component: AnimalFormComponent},
-  {path: 'edit-animal/:id', component: AnimalFormComponent},
+  {path: 'edit-animal/:cliniqueid/:id', component: AnimalFormComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', component: HomeComponent}
 ];

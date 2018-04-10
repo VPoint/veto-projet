@@ -1,3 +1,72 @@
-<p>
-  clinique-form works!
-</p>
+<h2>
+  {{action}}
+</h2>
+
+<form (submit)="complete()">
+  <mat-form-field>
+    <input matInput placeholder="Nom de la clinique"
+           required
+           [(ngModel)]="clinique.cliniquenom"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput placeholder="Code postal"
+           required
+           [(ngModel)]="clinique.codepostal"
+           pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="clinique.rue"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Rue">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="clinique.ville"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Ville">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="clinique.province"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Province">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="clinique.numtelephone"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Numéro de téléphone">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="clinique.numtelecopieur"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Numéro du télécopier">
+  </mat-form-field>
+
+  <label>Ajouter l'info du gestionnaire</label>
+  <app-personnel-form [embedded] = "true" (changeevent)="getGest($event)"></app-personnel-form>
+
+  <button type="submit" mat-raised-button color="primary">
+  {{action}} et son gestionnaire
+</button>
+</form>
+
+<br/>
+<button mat-raised-button routerLink="../clinique">
+  Retouner aux cliniques
+</button>

@@ -28,7 +28,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {routing} from './app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import {DatabaseService} from './database/database.service';
-import { ExamenFormComponent } from './examen-form/examen-form.component';
 import { CliniqueFormComponent } from './clinique-form/clinique-form.component';
 import { PersonnelFormComponent } from './personnel-form/personnel-form.component';
 import { ProprietaireFormComponent } from './proprietaire-form/proprietaire-form.component';
@@ -46,7 +45,6 @@ import {MatNativeDateModule} from "@angular/material";
     HomeComponent,
     AnimalFormComponent,
     AnimalViewComponent,
-    ExamenFormComponent,
     CliniqueFormComponent,
     PersonnelFormComponent,
     ProprietaireFormComponent,

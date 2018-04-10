@@ -43,7 +43,7 @@ export class DatabaseService {
 
   delete(table: string, id: string): Promise<any> {
     return this.http
-      .get(this.apiUrl + table + '/delete/' + id, {headers: this.headers})
+      .delete(this.apiUrl + table + '/delete/' + id, {headers: this.headers})
       .toPromise()
       .then(res => res)
       .catch(err => console.log(err));

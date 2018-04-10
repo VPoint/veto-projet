@@ -8,12 +8,12 @@ import {DatabaseService} from '../database/database.service';
   styleUrls: ['./clinique.component.css']
 })
 export class CliniqueComponent implements OnInit {
-  displayedCliniqueColumns = ['cliniqueno', 'cliniquenom', 'codepostal', 'rue', 'ville', 'province'];
+  displayedCliniqueColumns = ['cliniqueno', 'cliniquenom', 'codepostal', 'rue', 'ville', 'province', 'numtelephone', 'numtelecopieur'];
   cliniqueSource: any;
 
   cliniqueTitles = {
     'cliniqueno': 'No.', 'cliniquenom': 'Nom', 'codepostal': 'Code postale', 'province': 'Province',
-    'rue': 'Rue', 'ville': 'Ville'
+    'rue': 'Rue', 'ville': 'Ville', 'numtelephone': 'No. de téléphone', 'numtelecopieur': 'No. de télécopieur'
   };
 
   applyFilter(filterValue: string) {
@@ -30,6 +30,5 @@ export class CliniqueComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

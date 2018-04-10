@@ -1,51 +1,62 @@
-<div class="header">
-  <h2>{{animal.animalno}} : {{animal.nom}}</h2>
-  <button mat-icon-button routerLink="/edit-animal/{{animal.animalno}}">
-    <mat-icon>edit</mat-icon>
-  </button>
-  <button mat-icon-button (click)="delete(animal.animalno)">
-    <mat-icon>delete</mat-icon>
-  </button>
+<div *ngIf="animal">
+  <div class="header">
+    <h2>{{animal.animalno}} : {{animal.nom}}</h2>
+    <button mat-icon-button routerLink="/edit-animal/{{animal.cliniqueno}}/{{animal.animalno}}">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete(animal.animalno)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+  <section>
+    <p>Type d'animal : {{animal.atype}}</p>
+    <p>{{animal.description}}</p>
+    <p>Date de naissance : {{animal.datedenaissance | date}}</p>
+    <p>Date d'inscription : {{animal.dateinscription | date}}</p>
+    <p>État : {{animal.etat}}</p>
+  </section>
+
+  <h3 *ngIf="examens.length > 0">Examens pour {{animal.nom}}</h3>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let exam of examens"
+                         (opened)="getTraitment(exam.examenno)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Examen {{exam.examenno}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <section>
+        {{exam.description}}
+        <p>Datée : {{exam.datee | date}}</p>
+        <p>Heure : {{exam.heure}}</p>
+
+        <h3 *ngIf="examtraitements.length > 0">Liste des Traitements</h3>
+        <table *ngIf="examtraitements.length > 0">
+          <tr>
+            <th *ngFor="let head of examHeader">{{titles[head]}}</th>
+          </tr>
+          <tr *ngFor="let info of examtraitements">
+            <td *ngFor="let head of examHeader">{{info[head]}}</td>
+          </tr>
+        </table>
+      </section>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br/>
+
+  <h3 *ngIf="traitements.length > 0">Traitements pour {{animal.nom}}</h3>
+  <table *ngIf="traitements.length > 0">
+    <tr>
+      <th *ngFor="let head of medHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of traitements">
+      <td *ngFor="let head of medHeader">{{info[head]}}</td>
+    </tr>
+  </table>
+
+  <br/>
+  <button mat-raised-button color="primary" routerLink="/animal">Retourner à la page des animaux</button>
 </div>
 
-<section>
-  <p>Type d'animal : {{animal.atype}}</p>
-  <p>{{animal.description}}</p>
-  <p>Date de naissance : {{animal.datedenaissance | date}}</p>
-  <p>Date d'inscription : {{animal.dateinscription | date}}</p>
-  <p>État : {{animal.etat}}</p>
-  <button mat-raised-button color="primary">Voir les autres animaux de {{animal.propno}}</button>
-</section>
-
-<h3 *ngIf="examens.length > 0">Examens pour {{animal.nom}}</h3>
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let exam of examens"
-                       (opened)="getTraitment(exam.examenno)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Examen {{exam.examenno}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <section>
-      {{exam.description}}
-      <p>Datée : {{exam.datee | date}}</p>
-      <p>Heure : {{exam.heure}}</p>
-
-      <h3 *ngIf="traitements.length > 0">Liste des Traitements</h3>
-      <table *ngIf="traitements.length > 0">
-        <tr>
-          <th>No.</th>
-          <th>Description</th>
-          <th>Cout</th>
-        </tr>
-
-        <tr *ngFor="let t of traitements">
-          <td>{{t.traitementno}}</td>
-          <td>{{t.description}}</td>
-          <td>{{t.cout}}</td>
-        </tr>
-      </table>
-    </section>
-  </mat-expansion-panel>
-</mat-accordion>

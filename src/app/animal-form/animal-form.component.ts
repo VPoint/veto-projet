@@ -8,14 +8,16 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./animal-form.component.css']
 })
 export class AnimalFormComponent implements OnInit {
-  animal: any = {};
-  cliniqueInfo = [];
+  cliniqueInfo: any[] = [];
   selectedClinique: any;
-  action = 'Créer animal';
-
-  propInfo = [];
-  selectedProp: any;
-  isEditMode = false;
+  action: string = 'Créer animal';
+  animal: any = {
+    animalno: '',
+    cliniqueno: ''
+  };
+  propInfo: any[] = [];
+  isEditMode: boolean = false;
+  limit: any = new Date(Date.now());
 
   constructor(private data: DatabaseService, private route: ActivatedRoute, private router: Router) {
 
@@ -29,10 +31,9 @@ export class AnimalFormComponent implements OnInit {
       }
     );
 
-    console.log(this.route.url.pipe());
-    this.data.getSome('animal', this.route.snapshot.paramMap.get('id'))
+    this.data.getSome('animal', this.route.snapshot.paramMap.get('id') + '/' + this.route.snapshot.paramMap.get('cliniqueid'))
       .then((data) => {
-        if (data.data[0]) {
+        if (data.result === 'SUCCESS' && data.data[0]) {
           this.animal = data.data[0];
           this.isEditMode = true;
           this.action = 'Modifier animal';
@@ -44,10 +45,12 @@ export class AnimalFormComponent implements OnInit {
   }
 
   getOwner() {
-    this.data.getSome('proprietaire', this.selectedClinique).then(
+    this.data.getSome('clinique/proprietaire', this.selectedClinique).then(
       (res) => {
         this.propInfo = res.data;
-        this.selectedProp = this.propInfo[0].propno;
+        if(this.propInfo[0]) {
+          this.animal.propno = this.propInfo[0].propno;
+        }
       }
     );
   }
@@ -57,19 +60,35 @@ export class AnimalFormComponent implements OnInit {
       this.data.update('animal', this.route.snapshot.paramMap.get('id'), this.animal)
         .then((data) => {
           if (data.result === 'SUCCESS') {
-            this.router.navigate(['./animal/' + this.animal.animalno]);
+            this.router.navigate(['./animal/' + this.animal.cliniqueno + '/' +  this.animal.animalno]);
           }
-          console.log(data);
         });
     } else {
-      this.animal.animalno = 'A' + Math.floor(Math.random() * Math.floor(10) + 11);
-      this.data.create('animal', this.animal)
-        .then((data) => {
-          if (data.result === 'SUCCESS') {
-            this.router.navigate(['./animal/' + this.animal.animalno]);
+      console.log(this.animal);
+      this.data.getSome('clinique/animal', this.selectedClinique).then(
+        (res) => {
+          if (res.data.length === 0) {
+            this.animal.animalno = 'A1';
+          } else {
+            const num = (res.data[res.data.length - 1].animalno).split('A');
+            if (num === '') {
+              this.animal.animalno = 'A1';
+            } else {
+              this.animal.animalno = 'A' + (parseInt(num[1], 10) + 1);
+            }
           }
-          console.log(data);
-        });
+        }
+      ).then(
+        () => {
+          this.data.create('animal', this.animal)
+            .then((data) => {
+              if (data.result === 'SUCCESS') {
+                this.router.navigate(['./animal/' + this.animal.cliniqueno  + '/' + this.animal.animalno]);
+              }
+            });
+        }
+      );
+
     }
   }
 }

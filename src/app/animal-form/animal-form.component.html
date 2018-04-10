@@ -2,9 +2,10 @@
   {{action}}
 </h2>
 
-<div>
+<form>
   <mat-form-field>
   <mat-select placeholder="Nom du clinique"
+              required
               [(value)] = "selectedClinique"
               [(ngModel)]="animal.cliniqueno"
               [ngModelOptions]="{standalone: true}"
@@ -14,26 +15,31 @@
   </mat-form-field>
   <mat-form-field>
   <mat-select placeholder="Nom de la propriétaire"
-              [(value)] = "selectedProp"
+              required
               [(ngModel)]="animal.propno"
               [ngModelOptions]="{standalone: true}">
-    <mat-option *ngFor="let p of propInfo" [value]="p.propno">{{p.nom}}</mat-option>
+    <mat-option *ngFor="let p of propInfo" [value]="p.propno">{{p.propno}} - {{p.nom}}</mat-option>
   </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="Nom de l'animal"
+    <input matInput
+           required
+           placeholder="Nom de l'animal"
            [(ngModel)]="animal.nom"
            [ngModelOptions]="{standalone: true}">
   </mat-form-field>
 
   <mat-form-field >
-    <input matInput placeholder="Type de l'animal"
+    <input matInput
+           required
+           placeholder="Type de l'animal"
            [(ngModel)]="animal.atype"
            [ngModelOptions]="{standalone: true}">
   </mat-form-field>
 
   <mat-form-field >
     <input matInput
+           required
            [(ngModel)]="animal.description"
            [ngModelOptions]="{standalone: true}"
            placeholder="Description">
@@ -41,8 +47,10 @@
 
   <mat-form-field >
     <input matInput
+           required
            [matDatepicker]="naissance"
            [(ngModel)]="animal.datedenaissance"
+           [max]="limit"
            [ngModelOptions]="{standalone: true}"
            placeholder="Date de naissance">
     <mat-datepicker-toggle matSuffix [for]="naissance"></mat-datepicker-toggle>
@@ -51,8 +59,10 @@
 
   <mat-form-field >
     <input matInput
+           required
            [matDatepicker]="inscr"
            [(ngModel)]="animal.dateinscription"
+           [min]="animal.datedenaissance"
            [ngModelOptions]="{standalone: true}"
            placeholder="Date d'inscription">
     <mat-datepicker-toggle matSuffix [for]="inscr"></mat-datepicker-toggle>
@@ -61,6 +71,7 @@
 
   <label>État: </label>
   <mat-radio-group [(ngModel)]="animal.etat"
+                   required
                    [ngModelOptions]="{standalone: true}">
     <mat-radio-button value="vivant">vivant</mat-radio-button>
     <mat-radio-button value="mort">mort</mat-radio-button>
@@ -70,6 +81,6 @@
     {{action}}
   </button>
 
-</div>
+</form>
 
 

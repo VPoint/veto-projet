@@ -1,6 +1,9 @@
 const { Client } = require('pg');
 const fs = require('fs');
-const connectionString = process.env.DATABASE_URL || 'postgres://';
+const config = JSON.parse(fs.readFileSync('./src/assets/serverconfig.json'));
+
+const connectionString = process.env.DATABASE_URL || 'postgres://' + config.username +
+  ':' + config.password + '@' + config.host + ':' + config.port + '/' + config.database;
 
 const sql = fs.readFileSync('./src/assets/bdschema.sql').toString()
   .replace(/(\r\n|\n|\r)/gm, ' ') // remove newlines
@@ -21,6 +24,6 @@ database.query(sql, (err, res) => {
 
 database.query(sqlData, (err, res) => {
   console.log(err, res);
-}).then(
-  database.end();
-);
+});
+
+database.end();

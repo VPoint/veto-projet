@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {DatabaseService} from "../database/database.service";
-import {MatTableDataSource} from "@angular/material";
+import {DatabaseService} from '../database/database.service';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-proprietaire',
@@ -29,16 +29,23 @@ export class ProprietaireComponent implements OnInit {
     );
   }
 
-  delete(id: string) {
-    this.data.delete('proprietiare', id);
-
-    //mettre à jour les données
+  delete(id: string, clinno: string) {
+    this.data.delete('proprietaire', id + '/' + clinno ).then(
+      (ans) => {
+        if (ans.result !== 'SUCCESS') {
+          console.log('Oops un animal ou clinique utilise cette tuple');
+        } else {
+          this.data.getAll('proprietaire').then(
+            (res) => {
+              console.log(res);
+              // Mettre à jour les
+              this.propSource = new MatTableDataSource(res.data);
+            }
+          );
+        }
+      });
   }
 
   ngOnInit() {
-  }
-
-  print(text: any) {
-    console.log(text);
   }
 }

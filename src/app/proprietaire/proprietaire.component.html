@@ -16,10 +16,7 @@
       <mat-cell *matCellDef="let element">
         <div *ngIf="name !='cliniqueno'">{{element[name]}} </div>
         <div *ngIf="name =='cliniqueno'">
-          <button mat-icon-button>
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="delete(element.propno, element.cliniqueno)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -31,7 +28,7 @@
   </mat-table>
 
   <div style="position: fixed; bottom:0;">
-    <button mat-raised-button color="primary" style="width: 100vw; margin-left: -20px;">
+    <button mat-raised-button color="primary" style="width: 100vw; margin-left: -20px;" routerLink="../new-proprietaire">
       Ajouter une propriétaire
     </button>
   </div>

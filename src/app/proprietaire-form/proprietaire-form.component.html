@@ -1,3 +1,57 @@
-<p>
-  proprietaire-form works!
-</p>
+<h2>
+  {{action}}
+</h2>
+
+<form>
+  <mat-form-field>
+    <mat-select placeholder="Nom du clinique"
+                required
+                (selectionChange) = "calcPropNo()"
+                [(ngModel)]="prop.cliniqueno"
+                [ngModelOptions]="{standalone: true}">
+      <mat-option *ngFor="let c of cliniqueInfo" [value]="c.cliniqueno">{{c.cliniquenom}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           required
+           placeholder="Nom du propriétaire"
+           [(ngModel)]="prop.nom"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="prop.addresse"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Rue">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           placeholder="Code postal"
+           [(ngModel)]="prop.numerodetelephone"
+           pattern="^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="prop.numtelephone"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Numéro de téléphone">
+  </mat-form-field>
+
+  <button (click)="complete()" mat-raised-button color="primary">
+    {{action}}
+  </button>
+  <button routerLink="../proprietaire" mat-raised-button>
+    Retouner aux propriétaires
+  </button>
+
+</form>

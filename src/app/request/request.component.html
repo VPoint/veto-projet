@@ -1,5 +1,5 @@
 <h2>
-  Les 10 Requêtes:
+  Les 14 Requêtes:
 </h2>
 
 <mat-accordion>
@@ -203,6 +203,90 @@
     <p>Quels sont les propriétaires dont le nom contient « blay » ?</p>
     <p>
       <i>SELECT * FROM VETOSANSFRONTIERESDB.proprietaire WHERE nom LIKE '%blay%';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="getRequest('R11')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 11
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Supprimez le vétérinaire « Jean Tremblay »</p>
+    <p>
+      <i>DELETE FROM VETOSANSFRONTIERESDB.Personnel WHERE fonction='veterinaire' AND prenom = 'Jean' AND nomdefamille =
+        'Tremblay' ;</i>
+    </p>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="getRequest('R12')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 12
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister les détails des propriétaires qui ont un chat et un chien</p>
+    <p>
+      <i>SELECT DISTINCT RST.nom FROM (SELECT PR.nom, AN.atype FROM VETOSANSFRONTIERESDB.Proprietaire AS PR,
+        VETOSANSFRONTIERESDB.Animal AS AN WHERE PR.propno = AN.propno) AS RST WHERE NOT EXISTS ( SELECT y.atype FROM
+        VETOSANSFRONTIERESDB.Animal AS y WHERE y.atype NOT IN( SELECT z.atype FROM (SELECT PR.nom, AN.atype FROM
+        VETOSANSFRONTIERESDB.Proprietaire AS PR, VETOSANSFRONTIERESDB.Animal AS AN WHERE PR.propno = AN.propno) AS z
+        WHERE (z.nom = RST.nom) AND (z.atype = y.atype) ));</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="getRequest('R13')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 13
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister les détails des propriétaires qui ont un chat ou un chien</p>
+    <p>
+      <i>SELECT DISTINCT PR.nom FROM VETOSANSFRONTIERESDB.Proprietaire AS PR, VETOSANSFRONTIERESDB.Animal AS AN WHERE
+        PR.propno = AN.propno AND AN.atype = 'chat' OR AN.atype ='chien';</i>
+    </p>
+
+    <tr>
+      <th *ngFor="let head of displayHeader">{{titles[head]}}</th>
+    </tr>
+    <tr *ngFor="let info of displayInfo">
+      <td *ngFor="let head of displayHeader">{{info[head]}}</td>
+    </tr>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="getRequest('R15')">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Requête 15
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Lister tous les animaux d’une clinique donnée avec leurs traitements s’ils existent. Dans le cas
+      contraire, affichez null.</p>
+    <p>
+      <i>SELECT AN.*, TC.traitementno FROM VETOSANSFRONTIERESDB.TraitementClinique AS TC RIGHT OUTER JOIN
+        VETOSANSFRONTIERESDB.Animal AS AN ON TC.cliniqueno = AN.cliniqueno
+        AND AN.cliniqueno = 'C1';</i>
     </p>
 
     <tr>

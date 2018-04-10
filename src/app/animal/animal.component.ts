@@ -34,25 +34,28 @@ export class AnimalComponent implements OnInit {
     );
   }
 
-  delete(id: string) {
-    this.data.delete('animal', id);
-
-    //mettre à jour les données
-    this.data.getAll('animal').then(
-      (res) => {
-        console.log(res);
-        // Retouner le nom du propriétaire aussi
-        this.animalSource = new MatTableDataSource(res.data);
+  delete(id: string, clinID: string) {
+    this.data.delete('animal', id + '/' + clinID).then(
+      (ans) => {
+        if (ans.result !== 'SUCCESS') {
+          console.log('Oops un examen utilise cette tuple!');
+        }
+      }
+    ).then(
+      () => {
+        this.data.getAll('animal').then(
+          (res) => {
+            console.log(res);
+            // Retouner le nom du propriétaire aussi
+            this.animalSource = new MatTableDataSource(res.data);
+          }
+        );
       }
     );
   }
 
   ngOnInit() {
 
-  }
-
-  print(text: any) {
-    console.log(text);
   }
 
 }

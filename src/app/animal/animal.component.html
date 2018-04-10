@@ -15,13 +15,15 @@
     <ng-container [matColumnDef]="name" *ngFor="let name of displayedAnimalColumns">
       <mat-header-cell *matHeaderCellDef> {{animalTitles[name]}}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div *ngIf="name !='cliniqueno'"
-             routerLink="/animal/{{element.animalno}}">{{element[name]}}</div>
+        <div *ngIf="name !='cliniqueno' && name != 'dateinscription' && name != 'datedenaissance'"
+             routerLink="/animal/{{element.cliniqueno}}/{{element.animalno}}">{{element[name]}}</div>
+        <div *ngIf="name == 'datedenaissance' || name == 'dateinscription'"
+             routerLink="/animal/{{element.cliniqueno}}/{{element.animalno}}">{{element[name] | date}}</div>
         <div *ngIf="name =='cliniqueno'">
-          <button mat-icon-button routerLink="/edit-animal/{{element.animalno}}">
+          <button mat-icon-button routerLink="/edit-animal/{{element.cliniqueno}}/{{element.animalno}}">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="delete(element.animalno)">
+          <button mat-icon-button (click)="delete(element.animalno, element.cliniqueno)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -29,8 +31,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedAnimalColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedAnimalColumns;"
-             (click)="print(row)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedAnimalColumns;"></mat-row>
   </mat-table>
 </div>
 

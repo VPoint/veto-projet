@@ -1,3 +1,106 @@
-<p>
-  personnel-form works!
-</p>
+<h2 *ngIf="!embedded">
+  {{action}}
+</h2>
+
+<form (submit)="complete()" (change)="sendEvent()">
+  <mat-form-field *ngIf="!embedded">
+    <mat-select placeholder="Nom du clinique"
+                required
+                [(ngModel)]="personnel.cliniqueno"
+                [ngModelOptions]="{standalone: true}">
+      <mat-option *ngFor="let c of cliniqueInfo" [value]="c.cliniqueno">{{c.cliniquenom}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           required
+           placeholder="Prénom"
+           [(ngModel)]="personnel.prenom"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           placeholder="Nom de famille"
+           [(ngModel)]="personnel.nomdefamille"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="personnel.adresse"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Addresse">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="personnel.numtelephone"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Numéro de téléphone">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [max] = "limit"
+           [matDatepicker]="naissance"
+           [(ngModel)]="personnel.datedenaissance"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Date de naissance">
+    <mat-datepicker-toggle matSuffix [for]="naissance"></mat-datepicker-toggle>
+    <mat-datepicker #naissance></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           [(ngModel)]="personnel.nas"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="NAS">
+  </mat-form-field>
+
+  <label>Sexe: </label>
+  <mat-radio-group [(ngModel)]="personnel.sexe"
+                   required
+                   placeholder="Sexe"
+                   [ngModelOptions]="{standalone: true}">
+    <mat-radio-button value="M">M</mat-radio-button>
+    <mat-radio-button value="F">F</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field *ngIf="!embedded">
+    <input matInput
+           required
+           [(ngModel)]="personnel.fonction"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Fonction">
+  </mat-form-field>
+
+  <mat-form-field >
+    <input matInput
+           required
+           type="number"
+           [(ngModel)]="personnel.salaire"
+           [ngModelOptions]="{standalone: true}"
+           placeholder="Salaire">
+  </mat-form-field>
+
+  <div class="button-group" *ngIf="!embedded">
+    <button type = "submit" mat-raised-button color="primary">
+      {{action}}
+    </button>
+    <button (click)="delete()" mat-raised-button color="accent">
+      Supprimer cette personne
+    </button>
+    <button (click)="return()" mat-raised-button routerLink="../personnel">
+      Retouner aux Personnel
+    </button>
+  </div>
+
+
+</form>
