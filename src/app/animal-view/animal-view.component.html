@@ -38,7 +38,10 @@
             <th *ngFor="let head of examHeader">{{titles[head]}}</th>
           </tr>
           <tr *ngFor="let info of examtraitements">
-            <td *ngFor="let head of examHeader">{{info[head]}}</td>
+            <td *ngFor="let head of examHeader">
+              <div *ngIf="head != 'datefini' && head !== 'datecommence'">{{info[head]}}</div>
+              <div *ngIf="head == 'datefini' || head == 'datecommence'">{{info[head] | date}}</div>
+            </td>
           </tr>
         </table>
       </section>
@@ -52,7 +55,9 @@
       <th *ngFor="let head of medHeader">{{titles[head]}}</th>
     </tr>
     <tr *ngFor="let info of traitements">
-      <td *ngFor="let head of medHeader">{{info[head]}}</td>
+      <td *ngFor="let head of medHeader">
+        {{info[head]}}
+      </td>
     </tr>
   </table>
 

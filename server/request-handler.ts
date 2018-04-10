@@ -83,9 +83,9 @@ exports.getTraitementByExamenNo = function(){
 
 exports.getTraitementByAnimalNo = function() {
   return (req, res, next) => {
-    db.query('SELECT TR.* FROM VETOSANSFRONTIERESDB.Traitementexamen AS TE, VETOSANSFRONTIERESDB.traitement AS TR,' +
-      ' WHERE TE.traitementno = TR.traitementno AND TE.examenno IN (' +
-      ' SELECT examenno FROM VETOSANSFRONTIERESDB.Examen WHERE EX.animalno = \'A1\' );', (err, data) => {
+    db.query('SELECT TR.* FROM VETOSANSFRONTIERESDB.Traitementexamen AS TE, VETOSANSFRONTIERESDB.traitement AS TR, ' +
+      'VETOSANSFRONTIERESDB.examen AS EX WHERE TE.traitementno = TR.traitementno ' +
+      'AND TE.examenno = EX.examenno AND EX.animalno = \'A1\';', (err, data) => {
       if (err) {
         console.log(req.params.id);
         console.log(err);

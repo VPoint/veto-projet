@@ -2,6 +2,6 @@
   "host": "localhost",
   "port": "5432",
   "database": "vetoprojet",
-  "user": "client",
+  "username": "client",
   "password": "serverPASSWORD"
 }

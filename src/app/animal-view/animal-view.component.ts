@@ -38,7 +38,7 @@ export class AnimalViewComponent implements OnInit {
         console.log(data);
       });
 
-    this.data.getSome('animal/traitment', this.route.snapshot.paramMap.get('id')).then(
+    this.data.getSome('traitement/animal', this.route.snapshot.paramMap.get('id')).then(
       (data) => {
         console.log(data);
         this.traitements = data.data;

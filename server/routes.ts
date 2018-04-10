@@ -23,7 +23,7 @@ router.get('/examen/:id/:cliniqueid', requestHandler.getByAnimalNo('examen'));
 
 router.get('/traitement/:id', requestHandler.getTraitementByExamenNo());
 
-router.get('/animal/traitement/:id', requestHandler.getTraitementByAnimalNo());
+router.get('/traitement/animal/:id', requestHandler.getTraitementByAnimalNo());
 router.get('/clinique/proprietaire/:id', requestHandler.getPropByCliniqueNo());
 router.get('/clinique/animal/:id', requestHandler.getAnimalByCliniqueNo());
 
