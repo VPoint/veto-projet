@@ -1,13 +1,9 @@
-const express = require('express');
 const fs = require('fs');
 const pg = require('pg');
 
 const config = JSON.parse(fs.readFileSync('./src/assets/serverconfig.json'));
 
-const connection = process.env.DATABASE_URL || 'postgres://' + config.username +
-  ':' + config.password + '@' + config.host + ':' + config.port + '/' + config.database;
-
-const db = new pg.Client(connection);
+const db = new pg.Client(config);
 db.connect();
 
 exports.getAll = function(table) {
@@ -88,8 +84,8 @@ exports.getTraitementByExamenNo = function(){
 exports.getTraitementByAnimalNo = function() {
   return (req, res, next) => {
     db.query('SELECT TR.* FROM VETOSANSFRONTIERESDB.Traitementexamen AS TE, VETOSANSFRONTIERESDB.traitement AS TR,' +
-      ' VETOSANSFRONTIERESDB.examen AS EX WHERE' +
-      ' TE.traitementno = TR.traitementno AND EX.examenno = TE.examenno AND EX.animalno = \'' + req.params.id + '\';', (err, data) => {
+      ' WHERE TE.traitementno = TR.traitementno AND TE.examenno IN (' +
+      ' SELECT examenno FROM VETOSANSFRONTIERESDB.Examen WHERE EX.animalno = \'A1\' );', (err, data) => {
       if (err) {
         console.log(req.params.id);
         console.log(err);

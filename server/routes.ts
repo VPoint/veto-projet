@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const pg = require('pg');
 const requestHandler = require('./request-handler.ts');
 
 router.post('/clinique/create', requestHandler.createClinique());
